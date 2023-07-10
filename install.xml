@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name><![CDATA[Option List By ID]]></name>
+  <code><![CDATA[prai_option_list_by_id]]></code>
+	<version><![CDATA[1.0]]></version>
+	<author><![CDATA[REDS PRAI]]></author>
+	<link><![CDATA[https://www.agenciaprai.com/]]></link>
+		
+	<file path="admin/view/template/catalog/option_list.twig" error="skip">
+		<operation>
+			<search><![CDATA[<td class="text-left">{% if sort == 'od.name' %}]]></search>
+			<add position="before"><![CDATA[<td class="text-center" style="width: 50px;">ID</td>]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<td class="text-left">{{ option.name }}</td>]]></search>
+			<add position="before"><![CDATA[<td class="text-center">{{ option.option_id }}</td>]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<td class="text-right">{% if sort == 'o.sort_order' %}]]></search>
+			<add position="before"><![CDATA[<td class="text-left">Tipo</td>]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<td class="text-right">{{ option.sort_order }}</td>]]></search>
+			<add position="before"><![CDATA[<td class="text-left">{{ option.type }}</td>]]></add>
+		</operation>
+		
+		<operation>
+			<search><![CDATA[<td class="text-center" colspan="4">]]></search>
+			<add position="replace"><![CDATA[<td class="text-center" colspan="6">]]></add>
+		</operation>
+	</file>
+	<file path="admin/controller/catalog/option.php" error="skip">
+		<operation>
+			<search><![CDATA[$sort = 'od.name';]]></search>
+			<add position="replace"><![CDATA[$sort = 'o.option_id';]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA['option_id'  => $result['option_id'],]]></search>
+			<add position="after"><![CDATA['type'       => $result['type'],]]></add>
+		</operation>
+	</file>	
+	<file path="admin/model/catalog/option.php" error="skip">
+		<operation>
+			<search><![CDATA[$sort_data = array(]]></search>
+		<add position="after" trim="true"><![CDATA['o.option_id',]]></add>
+		</operation>
+	</file>		
+</modification>
